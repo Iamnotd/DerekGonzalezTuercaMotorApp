@@ -1,6 +1,7 @@
 package org.derekgonzalez.view;
 import java.util.Scanner;
 import org.derekgonzalez.controller.ClientesController;
+import org.derekgonzalez.controller.VehiculosController;
 
 public class MenuPrincipal {
     //herramienta de scanner: lee datos de usuario
@@ -14,7 +15,7 @@ public class MenuPrincipal {
             System.out.println("   SISTEMA CENTRAL LIBRERIA - IN4CM");
             System.out.println("-----------------------------------------");
             System.out.println("1. Entrar a CLIENTES");
-            System.out.println("2. Entrar a MECANICOS");
+            System.out.println("2. Entrar a VEHICULOS");
             System.out.println("3. Entrar a REPUESTOS DE MECANICOS");
             System.out.println("3. Entrar a ORDEN DE SERVICIO");
             System.out.println("3. Entrar a REPUESTOS");
@@ -34,7 +35,9 @@ public class MenuPrincipal {
                     break;
                 case 2:
                     //instanciar la vista EDITORIALES
-                    System.out.println("EDITORIALES");
+                    VehiculosView vv = new VehiculosView();
+                    VehiculosController vc = new VehiculosController(vv);
+                    vc.iniciar();
                     break;
                 case 3:
                     //instanciar la vista LIBROS
