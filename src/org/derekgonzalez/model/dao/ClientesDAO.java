@@ -1,13 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package org.derekgonzalez.model.dao;
 
-/**
- *
- * @author informatica
- */
+import java.util.List;
+import org.derekgonzalez.model.Clientes;
+
+
 public interface ClientesDAO {
     
+   boolean insertar(Clientes clientes);
+   List<Clientes> listar();
+   Clientes buscar(int Cui);
+   boolean actualizar(Clientes clientes);
+   boolean eliminar(int Cui);
 }

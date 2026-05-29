@@ -1,13 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package org.derekgonzalez.system;
+import org.derekgonzalez.view.MenuPrincipal;
 
 /**
  *
- * @author informatica
+ * @author Derek Silvestre
  */
 public class Main {
+
+
+    public static void main(String[] args) {
+        // TODO code application logic here
+        // sout
+        // MVC / model view controller: mejora la legibilidad y estandariza el codigo
+        MenuPrincipal menu = new MenuPrincipal();
+        menu.iniciarSistema();
+    }
     
 }

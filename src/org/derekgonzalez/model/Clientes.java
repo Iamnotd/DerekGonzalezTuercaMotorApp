@@ -1,13 +1,32 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package org.derekgonzalez.model;
 
-/**
- *
- * @author informatica
- */
 public class Clientes {
     
+    private long CuiClientes;
+    private String nombreClientes;
+    
+    public Clientes() {
+        
+    }
+    
+    public Clientes(int CuiClientes, String nombreClientes) {
+        this.CuiClientes = CuiClientes;
+        this.nombreClientes = nombreClientes;
+    }
+    
+    public String getNombreClientes() { 
+        return nombreClientes;
+    }
+    
+    public void setNombreClientes (String nombreCategoria) { 
+        this.nombreClientes = nombreClientes;
+    }
+    
+    public int getCuiClientes() {
+        return (int) CuiClientes;
+    }
+    
+    public void setCuiClientes(int CuiCategoria) {
+        this.CuiClientes = CuiClientes;
+    }
 }
