@@ -4,6 +4,7 @@ import java.util.Scanner;
 import org.derekgonzalez.controller.ClientesController;
 import org.derekgonzalez.controller.MecanicosController;
 import org.derekgonzalez.controller.VehiculosController;
+import org.derekgonzalez.controller.OrdenesServicioController;
 
 public class MenuPrincipal {
     private final Scanner leer = new Scanner(System.in);
@@ -16,8 +17,9 @@ public class MenuPrincipal {
             System.out.println("=================================");
             System.out.println("1. Gestión de Clientes");
             System.out.println("2. Gestión de Vehículos");
-            System.out.println("3. Gestión de Mecánicos"); 
-            System.out.println("4. Salir del Sistema");
+            System.out.println("3. Gestión de Mecánicos");
+            System.out.println("4. Gestión de Órdenes de Servicio");
+            System.out.println("5. Salir del Sistema");
             System.out.print("Seleccione un módulo: ");
             
             try {
@@ -37,17 +39,22 @@ public class MenuPrincipal {
                     VehiculosController vc = new VehiculosController(vv);
                     vc.iniciar();
                     break;
-                case 3: // NUEVO CASO: Ejecuta el módulo de mecánicos
+                case 3:
                     MecanicosView mv = new MecanicosView();
                     MecanicosController mc = new MecanicosController(mv);
                     mc.iniciar();
                     break;
                 case 4:
+                    OrdenesServicioView ov = new OrdenesServicioView();
+                    OrdenesServicioController oc = new OrdenesServicioController(ov);
+                    oc.iniciar();
+                    break;
+                case 5:
                     System.out.println("¡Gracias por utilizar el sistema TuercaMotor! Saliendo...");
                     break;
                 default:
                     System.out.println("Opción inválida. Intente de nuevo.");
             }
-        } while (opcion != 4);
+        } while (opcion != 5);
     }
 }

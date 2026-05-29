@@ -14,10 +14,10 @@ public class ClientesController {
         this.vista = vista;
         this.dao = new ClientesDAOImpl();
     }
-    
-    public void iniciar(){
+
+    public void iniciar() {
         int opcion;
-        do {            
+        do {
             opcion = vista.mostrarMenu();
             switch (opcion) {
                 case 1:
@@ -43,69 +43,68 @@ public class ClientesController {
             }
         } while (opcion != 6);
     }
-    
-    private void listar(){
+
+    private void guardar() {
+        try {
+            long cui = vista.solicitaCui();
+            String nombre = vista.solicitaNombre();
+            String apellido = vista.solicitaApellido();
+            String direccion = vista.solicitaDireccion();
+            String telefono = vista.solicitaTelefono();
+
+            Clientes nuevoCliente = new Clientes(cui, nombre, apellido, direccion, telefono);
+            boolean exito = dao.insertar(nuevoCliente);
+
+            if (exito) {
+                vista.mostrarMensaje("¡Cliente registrado con éxito!");
+            } else {
+                vista.mostrarMensaje("ERROR: No se pudo registrar al cliente.");
+            }
+        } catch (Exception e) {
+            vista.mostrarMensaje("ERROR en los datos: " + e.getMessage());
+        }
+    }
+
+    private void listar() {
         List<Clientes> lista = dao.listar();
         if (lista.isEmpty()) {
-            vista.mostrarMensaje("NO HAY CLIENTES");
+            vista.mostrarMensaje("NO HAY CLIENTES REGISTRADOS");
         } else {
             vista.mostrarTodos(lista);
         }
     }
 
-    private void guardar() {
-        long cui = vista.soliciarID(); 
-        String nombre = vista.solicitaNombre();
-        String apellido = vista.solicitaApellido();
-        String direccion = vista.solicitaDireccion();
-        String telefono = vista.solicitaTelefono();
-
-        Clientes nuevoCliente = new Clientes(cui, nombre, apellido, direccion, telefono);
-        boolean exito = dao.insertar(nuevoCliente);
-
-        if (exito) {
-            vista.mostrarMensaje("¡Cliente registrado con éxito!");
-        } else {
-            vista.mostrarMensaje("ERROR: No se pudo registrar el cliente.");
-        }
-    }
-
     private void buscarPorCui() {
-        long cui = vista.soliciarCui();
-        Clientes clienteEncontrado = dao.buscar(cui);
-        
-        if (clienteEncontrado != null) {
-            vista.mostrarCategoria(clienteEncontrado);
-        } else {
-            vista.mostrarMensaje("No se encontró ningún cliente con el CUI ingresado.");
+        try {
+            long cui = vista.solicitaCui();
+            Clientes c = dao.buscar(cui);
+            if (c != null) {
+                vista.mostrarDetalle(c);
+            } else {
+                vista.mostrarMensaje("No se encontró ningún cliente con ese CUI.");
+            }
+        } catch (Exception e) {
+            vista.mostrarMensaje("ERROR: CUI inválido.");
         }
     }
+
     private void buscarPorDireccion() {
-        // Usamos el método solicitaDireccion() que ya tienes en tu vista
         String direccionInput = vista.solicitaDireccion();
-        
-        List<Clientes> clientesEncontrados = dao.buscarPorDireccion(direccionInput);
-        
-        if (clientesEncontrados.isEmpty()) {
-            vista.mostrarMensaje("No se encontraron clientes que coincidan con esa dirección.");
+        List<Clientes> encontrados = dao.buscarPorDireccion(direccionInput);
+        if (encontrados.isEmpty()) {
+            vista.mostrarMensaje("No se encontraron clientes en esa dirección.");
         } else {
-            vista.mostrarMensaje("\n--- RESULTADOS DE LA BÚSQUEDA ---");
-            // Usamos mostrarTodos() que ya recorre la lista perfectamente
-            vista.mostrarTodos(clientesEncontrados);
+            vista.mostrarTodos(encontrados);
         }
     }
-    
+
     private void buscarPorTelefono() {
-        // Usamos solicitaTelefono() que ya está listo en tu ClientesView
         String telefonoInput = vista.solicitaTelefono();
-        
-        List<Clientes> clientesEncontrados = dao.buscarPorTelefono(telefonoInput);
-        
-        if (clientesEncontrados.isEmpty()) {
-            vista.mostrarMensaje("No se encontraron clientes con ese número de teléfono.");
+        List<Clientes> encontrados = dao.buscarPorTelefono(telefonoInput);
+        if (encontrados.isEmpty()) {
+            vista.mostrarMensaje("No se encontraron clientes con ese teléfono.");
         } else {
-            vista.mostrarMensaje("\n--- RESULTADOS DE LA BÚSQUEDA POR TELÉFONO ---");
-            vista.mostrarTodos(clientesEncontrados);
+            vista.mostrarTodos(encontrados);
         }
     }
 }
