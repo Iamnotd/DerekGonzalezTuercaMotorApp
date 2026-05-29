@@ -101,4 +101,62 @@ public class ClientesDAOImpl implements ClientesDAO {
     public boolean eliminar(long cui) {
         return false;
     }
+    
+    @Override
+    public List<Clientes> buscarPorDireccion(String direccion) {
+        List<Clientes> listaClientes = new ArrayList<>();
+        // Buscamos cualquier coincidencia parcial en la dirección
+        String consulta = "select cui, nombre, apellido, direccion, telefono from clientes where direccion like ?";
+
+        try (
+            Connection conexion = Conexion.conectar();
+            PreparedStatement statement = conexion.prepareStatement(consulta)
+        ) {
+            // Configuramos el parámetro para que busque "cualquier cosa antes y después" del texto ingresado
+            statement.setString(1, "%" + direccion + "%");
+            
+            try (ResultSet resultado = statement.executeQuery()) {
+                while (resultado.next()) {
+                    listaClientes.add(new Clientes(
+                        resultado.getLong("cui"),
+                        resultado.getString("nombre"),
+                        resultado.getString("apellido"),
+                        resultado.getString("direccion"),
+                        resultado.getString("telefono")
+                    ));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("ERROR: al buscar cliente por dirección: " + e.getMessage());
+        }
+        return listaClientes;
+    }
+    
+    @Override
+    public List<Clientes> buscarPorTelefono(String telefono) {
+        List<Clientes> listaClientes = new ArrayList<>();
+        String consulta = "select cui, nombre, apellido, direccion, telefono from clientes where telefono = ?";
+
+        try (
+            Connection conexion = Conexion.conectar();
+            PreparedStatement statement = conexion.prepareStatement(consulta)
+        ) {
+            statement.setString(1, telefono);
+            
+            try (ResultSet resultado = statement.executeQuery()) {
+                while (resultado.next()) {
+                    listaClientes.add(new Clientes(
+                        resultado.getLong("cui"),
+                        resultado.getString("nombre"),
+                        resultado.getString("apellido"),
+                        resultado.getString("direccion"),
+                        resultado.getString("telefono")
+                    ));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("ERROR: al buscar cliente por teléfono: " + e.getMessage());
+        }
+        return listaClientes;
+    }
 }

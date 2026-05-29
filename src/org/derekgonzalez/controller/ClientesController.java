@@ -29,6 +29,12 @@ public class ClientesController {
                 case 3:
                     buscarPorCui();
                     break;
+                case 4:
+                    buscarPorDireccion();
+                    break;
+                case 5:
+                    buscarPorTelefono();
+                    break;
                 case 6:
                     System.out.println("Regresando al menú principal...");
                     break;
@@ -72,6 +78,34 @@ public class ClientesController {
             vista.mostrarCategoria(clienteEncontrado);
         } else {
             vista.mostrarMensaje("No se encontró ningún cliente con el CUI ingresado.");
+        }
+    }
+    private void buscarPorDireccion() {
+        // Usamos el método solicitaDireccion() que ya tienes en tu vista
+        String direccionInput = vista.solicitaDireccion();
+        
+        List<Clientes> clientesEncontrados = dao.buscarPorDireccion(direccionInput);
+        
+        if (clientesEncontrados.isEmpty()) {
+            vista.mostrarMensaje("No se encontraron clientes que coincidan con esa dirección.");
+        } else {
+            vista.mostrarMensaje("\n--- RESULTADOS DE LA BÚSQUEDA ---");
+            // Usamos mostrarTodos() que ya recorre la lista perfectamente
+            vista.mostrarTodos(clientesEncontrados);
+        }
+    }
+    
+    private void buscarPorTelefono() {
+        // Usamos solicitaTelefono() que ya está listo en tu ClientesView
+        String telefonoInput = vista.solicitaTelefono();
+        
+        List<Clientes> clientesEncontrados = dao.buscarPorTelefono(telefonoInput);
+        
+        if (clientesEncontrados.isEmpty()) {
+            vista.mostrarMensaje("No se encontraron clientes con ese número de teléfono.");
+        } else {
+            vista.mostrarMensaje("\n--- RESULTADOS DE LA BÚSQUEDA POR TELÉFONO ---");
+            vista.mostrarTodos(clientesEncontrados);
         }
     }
 }
