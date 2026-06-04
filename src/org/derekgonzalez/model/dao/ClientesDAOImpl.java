@@ -22,7 +22,7 @@ public class ClientesDAOImpl implements ClientesDAO {
             CallableStatement call = conexion.prepareCall(consulta)
         ) {
             // CORREGIDO: Quitados los puntos dobles y estructurado limpiamente
-            call.setString(1, clientes.getCui());
+            call.setLong(1, clientes.getCui());
             call.setString(2, clientes.getNombre());
             call.setString(3, clientes.getApellido());
             call.setString(4, clientes.getDireccion());
